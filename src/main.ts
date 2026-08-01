@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -42,17 +43,36 @@ async function bootstrap() {
     }),
   );
 
-
+  // Global Exception Filter
   app.useGlobalFilters(new HttpExceptionFilter());
 
-
+  // Global Response Interceptor
   app.useGlobalInterceptors(new ResponseInterceptor());
+
+  // Swagger Configuration
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle(configService.get<string>('swagger.title')!)
+    .setDescription(configService.get<string>('swagger.description')!)
+    .setVersion(configService.get<string>('swagger.version')!)
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+
+  SwaggerModule.setup(
+    configService.get<string>('swagger.path')!,
+    app,
+    document,
+  );
 
   const port = configService.get<number>('app.port') || 3000;
 
   await app.listen(port);
 
-  console.log(`Server running on http://localhost:${port}/api/v1`);
+  console.log(`🚀 Server running on http://localhost:${port}/api/v1`);
+  console.log(
+    `📚 Swagger Docs: http://localhost:${port}/${configService.get<string>('swagger.path')}`,
+  );
 }
 
 bootstrap();
