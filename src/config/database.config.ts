@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('database', () => ({
-  uri:
-    process.env.MONGODB_URI ||
-    'mongodb://localhost:27017/exam-system',
+  url:
+    process.env.DATABASE_URL ??
+    'postgresql://postgres:postgres@localhost:5432/exam_system',
 }));

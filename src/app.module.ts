@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
 import swaggerConfig from './config/swagger.config';
 
+import { PrismaModule } from './prisma/prisma.module';
 import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
-    // Global Configuration
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
@@ -24,18 +23,9 @@ import { HealthModule } from './modules/health/health.module';
       ],
     }),
 
-    // MongoDB Configuration
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('database.uri'),
-      }),
-    }),
+    PrismaModule,
 
-    // Core Modules
     HealthModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
