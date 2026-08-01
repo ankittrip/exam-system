@@ -59,6 +59,7 @@ model User {
   passwordChangedAt DateTime?
 
   courses           Course[] @relation("InstructorCourses")
+  createdExams      Exam[]   @relation("InstructorExams")
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -79,8 +80,43 @@ model Course {
     onDelete: Restrict
   )
 
+  exams        Exam[]
+
   isActive     Boolean  @default(true)
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model Exam {
+  id               String      @id @default(cuid())
+
+  title            String
+  description      String?
+
+  courseId         String
+  course           Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  instructorId     String
+  instructor        User        @relation("InstructorExams", fields: [instructorId], references: [id], onDelete: Restrict)
+
+  duration          Int
+
+  totalMarks        Int
+  passingMarks      Int
+
+  negativeMarking   Boolean     @default(false)
+  negativeMarks     Float?      // e.g. 0.25
+
+  randomQuestions   Boolean     @default(false)
+
+  maxAttempts       Int         @default(1)
+
+  startTime         DateTime
+  endTime           DateTime
+
+  status            ExamStatus  @default(DRAFT)
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
 }
