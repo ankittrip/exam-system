@@ -8,6 +8,7 @@ import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -41,8 +42,11 @@ async function bootstrap() {
     }),
   );
 
-  // Global Exception Filter
+
   app.useGlobalFilters(new HttpExceptionFilter());
+
+
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   const port = configService.get<number>('app.port') || 3000;
 
