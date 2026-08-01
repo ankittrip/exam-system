@@ -7,31 +7,32 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
 
-
+  // Security
   app.use(helmet());
 
-
+  // Compression
   app.use(compression());
 
-
+  // Cookie Parser
   app.use(cookieParser());
 
-
+  // Enable CORS
   app.enableCors({
     origin: true,
     credentials: true,
   });
 
-
+  // Global Prefix
   app.setGlobalPrefix('api/v1');
 
-
+  // Global Validation
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -39,6 +40,9 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  // Global Exception Filter
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const port = configService.get<number>('app.port') || 3000;
 

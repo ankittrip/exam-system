@@ -11,6 +11,7 @@ import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
+    // Global Configuration
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
@@ -23,6 +24,7 @@ import { HealthModule } from './modules/health/health.module';
       ],
     }),
 
+    // MongoDB Configuration
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -30,7 +32,10 @@ import { HealthModule } from './modules/health/health.module';
       }),
     }),
 
+    // Core Modules
     HealthModule,
   ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
