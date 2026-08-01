@@ -6,6 +6,8 @@ import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
 import swaggerConfig from './config/swagger.config';
 
+import { HealthModule } from './modules/health/health.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +21,8 @@ import swaggerConfig from './config/swagger.config';
         swaggerConfig,
       ],
     }),
+
+    HealthModule,
   ],
 })
 export class AppModule {}
