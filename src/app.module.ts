@@ -7,7 +7,9 @@ import jwtConfig from './config/jwt.config';
 import swaggerConfig from './config/swagger.config';
 
 import { PrismaModule } from './prisma/prisma.module';
+
 import { HealthModule } from './modules/health/health.module';
+import { AuthModule } from './modules/auth/auth.module';   // ✅ Add this
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { HealthModule } from './modules/health/health.module';
     }),
 
     PrismaModule,
+
+    AuthModule,     
 
     HealthModule,
   ],
