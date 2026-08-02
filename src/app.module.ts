@@ -9,7 +9,11 @@ import swaggerConfig from './config/swagger.config';
 import { PrismaModule } from './prisma/prisma.module';
 
 import { HealthModule } from './modules/health/health.module';
-import { AuthModule } from './modules/auth/auth.module';   // ✅ Add this
+import { AuthModule } from './modules/auth/auth.module';
+import { CoursesModule } from './modules/courses/courses.module';    
+import { QuestionsModule } from './modules/questions/questions.module'; 
+import { ExamsModule } from './modules/exams/exams.module';             
+import { AttemptsModule } from './modules/attempts/attempts.module';
 
 @Module({
   imports: [
@@ -27,9 +31,12 @@ import { AuthModule } from './modules/auth/auth.module';   // ✅ Add this
 
     PrismaModule,
 
-    AuthModule,     
-
+    AuthModule,
     HealthModule,
+    
+    CoursesModule,   
+    QuestionsModule, 
+    ExamsModule, AttemptsModule,     
   ],
 })
 export class AppModule {}
