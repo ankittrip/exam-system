@@ -1,4 +1,9 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import { 
+  Injectable, 
+  ConflictException, 
+  NotFoundException, 
+  BadRequestException  
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateCourseDto, PaginationQueryDto } from './dto/create-course.dto';
 
@@ -7,6 +12,14 @@ export class CoursesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createCourseDto: CreateCourseDto, instructorId: string) {
+    const instructor = await this.prisma.user.findUnique({ where: { id: instructorId } });
+    if (!instructor) {
+      throw new NotFoundException('Assigned user not found');
+    }
+    if (instructor.role !== 'INSTRUCTOR') {
+      throw new BadRequestException('Assigned user must have the INSTRUCTOR role to teach a course');
+    }
+
     const existingCourse = await this.prisma.course.findUnique({
       where: { code: createCourseDto.code },
     });
@@ -27,7 +40,6 @@ export class CoursesService {
     const page = Number(query.page) || 1;
     const limit = Number(query.limit) || 10;
     const skip = (page - 1) * limit;
-
 
     const whereClause = query.search
       ? {

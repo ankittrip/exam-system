@@ -14,6 +14,12 @@ import { CoursesModule } from './modules/courses/courses.module';
 import { QuestionsModule } from './modules/questions/questions.module'; 
 import { ExamsModule } from './modules/exams/exams.module';             
 import { AttemptsModule } from './modules/attempts/attempts.module';
+import { ResultsModule } from './modules/results/results.module';
+import { LeaderboardModule } from './modules/leaderboard/leaderboard.module';
+
+
+import { AdminModule } from './modules/admin/admin.module';
+import { AuditLogsModule } from './modules/audit-logs/audit-logs.module';
 
 @Module({
   imports: [
@@ -36,7 +42,14 @@ import { AttemptsModule } from './modules/attempts/attempts.module';
     
     CoursesModule,   
     QuestionsModule, 
-    ExamsModule, AttemptsModule,     
+    ExamsModule, 
+    AttemptsModule, 
+    ResultsModule, 
+    LeaderboardModule,
+    
+
+    AdminModule,
+    AuditLogsModule,
   ],
 })
 export class AppModule {}

@@ -6,13 +6,13 @@ export class StartExamDto {
   @ApiProperty({ example: 'exam_id_here' })
   @IsString()
   @IsNotEmpty()
-  examId: string;
+  examId!: string;
 }
 
 export class AnswerSubmitDto {
   @ApiProperty({ example: 'question_id_here' })
   @IsString()
-  questionId: string;
+  questionId!: string;
 
   @ApiPropertyOptional({ example: 'option_id_here' })
   @IsOptional()
@@ -29,11 +29,11 @@ export class SubmitExamDto {
   @ApiProperty({ example: 'attempt_id_here' })
   @IsString()
   @IsNotEmpty()
-  attemptId: string;
+  attemptId!: string;
 
   @ApiProperty({ type: [AnswerSubmitDto] })
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => AnswerSubmitDto)
-  answers: AnswerSubmitDto[];
+  answers!: AnswerSubmitDto[];
 }

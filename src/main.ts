@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -10,9 +10,12 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { WinstonLogger } from './common/logger/winston.logger'; // ✅ Imported WinstonLogger
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonLogger,
+  });
 
   const configService = app.get(ConfigService);
 
@@ -69,9 +72,11 @@ async function bootstrap() {
 
   await app.listen(port);
 
-  console.log(`🚀 Server running on http://localhost:${port}/api/v1`);
-  console.log(
-    `📚 Swagger Docs: http://localhost:${port}/${configService.get<string>('swagger.path')}`,
+
+  Logger.log(`Server running on http://localhost:${port}/api/v1`, 'Bootstrap');
+  Logger.log(
+    `Swagger Docs: http://localhost:${port}/${configService.get<string>('swagger.path')}`,
+    'Bootstrap',
   );
 }
 
