@@ -32,9 +32,6 @@ import { Public } from '../../common/decorators/public.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // ===========================
-  // Register
-  // ===========================
 
   @Public()
   @Post('register')
@@ -49,9 +46,6 @@ export class AuthController {
     return this.authService.register(registerDto);
   }
 
-  // ===========================
-  // Login
-  // ===========================
 
   @Public()
   @Post('login')
@@ -66,9 +60,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  // ===========================
-  // Logout
-  // ===========================
+
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -80,9 +72,7 @@ export class AuthController {
     return this.authService.logout((req.user as any).id);
   }
 
-  // ===========================
-  // Profile
-  // ===========================
+
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -94,9 +84,6 @@ export class AuthController {
     return this.authService.profile((req.user as any).id);
   }
 
-  // ===========================
-  // Change Password
-  // ===========================
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()

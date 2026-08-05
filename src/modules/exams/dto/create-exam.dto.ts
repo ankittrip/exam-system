@@ -4,7 +4,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class CreateExamDto {
   @ApiProperty({ example: 'Mid-Term DSA Exam' })
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiPropertyOptional({ example: 'Covers Arrays and HashMaps' })
   @IsOptional()
@@ -13,19 +13,19 @@ export class CreateExamDto {
 
   @ApiProperty({ description: 'ID of the associated Course' })
   @IsString()
-  courseId: string;
+  courseId!: string;
 
   @ApiProperty({ example: 60, description: 'Duration in minutes' })
   @IsNumber()
-  duration: number;
+  duration!: number;
 
   @ApiProperty({ example: 100 })
   @IsNumber()
-  totalMarks: number;
+  totalMarks!: number;
 
   @ApiProperty({ example: 40 })
   @IsNumber()
-  passingMarks: number;
+  passingMarks!: number;
 
   @ApiPropertyOptional({ example: false })
   @IsOptional()
@@ -49,11 +49,11 @@ export class CreateExamDto {
 
   @ApiProperty({ example: '2026-08-10T10:00:00Z' })
   @IsDateString()
-  startTime: string;
+  startTime!: string;
 
   @ApiProperty({ example: '2026-08-10T11:00:00Z' })
   @IsDateString()
-  endTime: string;
+  endTime!: string;
 
   @ApiPropertyOptional({
     type: [String],

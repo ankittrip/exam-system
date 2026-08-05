@@ -19,20 +19,20 @@ export class RegisterDto {
   })
   @IsString()
   @Length(2, 50)
-  firstName: string;
+  firstName!: string;
 
   @ApiProperty({
     example: 'Tripathi',
   })
   @IsString()
   @Length(2, 50)
-  lastName: string;
+  lastName!: string;
 
   @ApiProperty({
     example: 'ankit@gmail.com',
   })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     example: 'Ankit@123',
@@ -44,7 +44,7 @@ export class RegisterDto {
     minNumbers: 1,
     minSymbols: 1,
   })
-  password: string;
+  password!: string;
 
   @ApiPropertyOptional({
     example: '9876543210',

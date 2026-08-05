@@ -17,7 +17,7 @@ export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post()
-  @Roles(Role.ADMIN, Role.INSTRUCTOR) // Only Admins & Instructors can create courses
+  @Roles(Role.ADMIN, Role.INSTRUCTOR)
   @ApiOperation({ summary: 'Create a new course' })
   create(@Body() createCourseDto: CreateCourseDto, @Req() req: Request) {
     const userId = (req.user as any).id;
@@ -25,7 +25,7 @@ export class CoursesController {
   }
 
   @Get()
-  @Roles(Role.ADMIN, Role.INSTRUCTOR, Role.STUDENT) // Everyone can view courses
+  @Roles(Role.ADMIN, Role.INSTRUCTOR, Role.STUDENT)
   @ApiOperation({ summary: 'Get all courses with pagination and search' })
   findAll(@Query() query: PaginationQueryDto) {
     return this.coursesService.findAll(query);

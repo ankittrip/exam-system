@@ -12,11 +12,11 @@ describe('AuthService', () => {
         AuthService,
         { 
           provide: PrismaService, 
-          useValue: { user: { findUnique: jest.fn(), create: jest.fn() } } // Mocked Prisma 
+          useValue: { user: { findUnique: jest.fn(), create: jest.fn() } } 
         },
         { 
           provide: JwtService, 
-          useValue: { signAsync: jest.fn() } // Mocked JWT 
+          useValue: { signAsync: jest.fn() } 
         },
       ],
     }).compile();

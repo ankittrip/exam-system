@@ -9,7 +9,7 @@ export class ChangePasswordDto {
     example: 'Ankit@123',
   })
   @IsString()
-  oldPassword: string;
+  oldPassword!: string;
 
   @ApiProperty({
     example: 'NewPassword@123',
@@ -21,5 +21,5 @@ export class ChangePasswordDto {
     minNumbers: 1,
     minSymbols: 1,
   })
-  newPassword: string;
+  newPassword!: string;
 }

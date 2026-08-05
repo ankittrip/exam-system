@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Session expired or invalid. Please login again.');
     }
 
-    // This object is injected into req.user
+    
     return { 
       id: payload.sub, 
       email: payload.email, 

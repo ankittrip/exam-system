@@ -3,18 +3,17 @@ version: "3.9"
 services:
   postgres:
     image: postgres:16
-
     container_name: exam-system-postgres
 
     restart: unless-stopped
-
-    ports:
-      - "5432:5432"
 
     environment:
       POSTGRES_DB: exam_system
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -24,6 +23,27 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  api:
+    build: .
+
+    container_name: exam-system-api
+
+    restart: unless-stopped
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/exam_system
+      JWT_SECRET: exv7dhue83hfdu47hj48dnh8rh74ud83h
+      JWT_EXPIRES_IN: 1d
 
 volumes:
   postgres_data:

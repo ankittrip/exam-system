@@ -70,7 +70,7 @@ export class AttemptsService {
 
     for (const ans of answers) {
       const examQuestion = exam.questions.find(eq => eq.questionId === ans.questionId);
-      if (!examQuestion) continue; // Skip if question doesn't belong to exam
+      if (!examQuestion) continue; 
 
       const question = examQuestion.question;
       let isCorrect = false;
@@ -83,7 +83,6 @@ export class AttemptsService {
           isCorrect = true;
           obtainedMarks = question.marks;
         } else {
-          // Negative marking check
           if (exam.negativeMarking && exam.negativeMarks) {
             obtainedMarks = -exam.negativeMarks;
           }
@@ -115,7 +114,6 @@ export class AttemptsService {
 
 
     const result = await this.prisma.$transaction(async (tx) => {
-      // Save student answers
       for (const ansData of evaluatedAnswers) {
         await tx.studentAnswer.upsert({
           where: { attemptId_questionId: { attemptId, questionId: ansData.questionId } },

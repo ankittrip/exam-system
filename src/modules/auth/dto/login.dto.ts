@@ -9,11 +9,11 @@ export class LoginDto {
     example: 'ankit@gmail.com',
   })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     example: 'Ankit@123',
   })
   @IsString()
-  password: string;
+  password!: string;
 }

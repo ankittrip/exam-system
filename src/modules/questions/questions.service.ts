@@ -18,7 +18,6 @@ export class QuestionsService {
 
     const { options, ...questionData } = createQuestionDto;
 
-    // Prisma nested write logic for MCQs
     const createPayload: any = {
       ...questionData,
       createdById: instructorId,
